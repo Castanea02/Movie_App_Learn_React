@@ -1,4 +1,9 @@
 .title {
   font-family: "Courier New", Courier, monospace;
-  font-size: 19px;
+  font-size: 50px;
+}
+
+.btn {
+  color: white;
+  background-color: tomato;
 }
