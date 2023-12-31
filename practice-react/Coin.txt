@@ -1,0 +1,48 @@
+ const [loading, setLoading] = useState(true);
+  const [conins, setCoins] = useState([]);
+  const [input, setInput] = useState("");
+  const [selectCoin, setSelectCoin] = useState("");
+
+  const inputUS = (event) => {
+    setInput(event.target.value);
+  };
+
+  const selectedCoin = (event) => {
+    setSelectCoin(event.target.value);
+  };
+
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <div align="center">
+      <h1>The Coin Calculator ({conins.length})</h1>
+      <input placeholder="Input money(US) on hand" onChange={inputUS}></input>
+      <br />
+      <h1>▼</h1>
+      {loading ? (
+        <strong>Loading..</strong>
+      ) : (
+        <select onChange={selectedCoin}>
+          {conins.map((coin, index) => (
+            <option key={index} value={coin.quotes.USD.price}>
+              {coin.name} ({coin.symbol}) : ${coin.quotes.USD.price} USD
+            </option>
+          ))}
+        </select>
+      )}
+      <br />
+      <h1>▼</h1>
+      <h1>
+        {input == 0
+          ? "please input your money!"
+          : "I can buy " + input / selectCoin}
+      </h1>
+    </div>
+  );

@@ -1,0 +1,39 @@
+ const [toDo, setTodo] = useState("");
+  const [toDos, setTodos] = useState([]);
+
+  const onChange = (event) => {
+    setTodo(event.target.value);
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (toDo === "") {
+      return;
+    }
+    
+    setTodo("");
+    setTodos((currentArray) => {
+      console.log(
+        currentArray
+      );
+      return [toDo, ...currentArray];
+    });
+  };
+
+  return (
+    <div align="center">
+      <form onSubmit={onSubmit}>
+        <h1>My Todos ({toDos.length})</h1>
+        <input
+          type="text"
+          placeholder="Write your to do"
+          value={toDo}
+          onChange={onChange}></input>
+        <button>Add To do</button>
+      </form>
+      <hr />
+      {toDos.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </div>
+  );
